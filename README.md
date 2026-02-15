@@ -67,7 +67,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - `/public`: Static assets like images and icons.
 - `/lib`: Utility functions and shared logic.
 
-## 📖 Learn More
+## 📖 Learn More -
 
 To learn more about the technologies used:
 
@@ -78,3 +78,4 @@ To learn more about the technologies used:
 ---
 
 Developed with ❤️ for **JNMF**.
+
