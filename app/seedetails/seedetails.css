@@ -1,0 +1,379 @@
+:root {
+  --primary-red: #8B0000;
+  --primary-gold: #b6a548;
+  --text-dark: #333;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.details-page-container {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.9), rgba(20, 0, 0, 0.95)), url('/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-section img {
+  width: 42px;
+  height: 42px;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+}
+
+.back-btn:hover {
+  background: var(--primary-gold);
+  color: #000;
+  border-color: var(--primary-gold);
+  transform: translateY(-2px);
+}
+
+.back-btn img {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+
+.details-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.details-card {
+  background: white;
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.6s ease-out;
+  position: relative;
+  max-height: calc(100vh - 100px);
+}
+
+.card-header {
+  background-color: var(--primary-red);
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.card-title-section {
+  text-align: left;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+}
+
+.view-btn {
+  background-color: white;
+  color: var(--primary-red);
+}
+
+.view-btn:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.print-btn {
+  background-color: var(--primary-gold);
+  color: black;
+}
+
+.print-btn:hover {
+  background-color: #d4c15b;
+  transform: translateY(-2px);
+}
+
+
+.table-container {
+  overflow: auto;
+  padding: 0;
+  flex-grow: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f8f9fa;
+  color: #555;
+  font-weight: 700;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 2px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+tr:hover td {
+  background-color: #fff9f9;
+}
+
+
+.pagination {
+  padding: 15px 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #fcfcfc;
+  border-top: 1px solid #eee;
+  flex-shrink: 0;
+}
+
+.pag-btn {
+  background-color: white;
+  border: 1.5px solid #ddd;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+.pag-btn:hover:not(:disabled) {
+  border-color: var(--primary-red);
+  color: var(--primary-red);
+  background-color: #fff8f8;
+}
+
+.pag-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+}
+
+.pag-info {
+  font-size: 13px;
+  font-weight: 600;
+  color: #777;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .details-header {
+    padding: 10px 20px;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .card-title-section {
+    text-align: center;
+  }
+
+  .action-buttons {
+    justify-content: center;
+  }
+
+  .btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  th,
+  td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .search-box {
+    margin-right: 0;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 30px;
+  padding: 6px 18px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 15px;
+  width: 300px;
+  position: relative;
+}
+
+.search-box:focus-within {
+  border-color: var(--primary-red);
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.search-box svg {
+  color: #999;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.search-box:focus-within svg {
+  color: var(--primary-red);
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 5px 0;
+  font-size: 14px;
+  width: 100%;
+  background: transparent;
+  color: #333;
+}
+
+.search-box input::placeholder {
+  color: #aaa;
+}
+
+.clear-search-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin-left: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  background-color: #eee;
+  color: #666;
+}
+
+.clear-search-btn svg {
+  margin-right: 0;
+  width: 14px;
+  height: 14px;
+}

@@ -1,0 +1,342 @@
+:root {
+    --primary-red: #8B0000;
+    --primary-gold: #b6a548;
+    --text-dark: #333;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.registration-page-container {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.9), rgba(20, 0, 0, 0.95)), url('/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+.registration-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-section img {
+    width: 42px;
+    height: 42px;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    line-height: 1.2;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back-btn:hover {
+    background: var(--primary-gold);
+    color: #000;
+    border-color: var(--primary-gold);
+    transform: translateY(-2px);
+}
+
+
+.registration-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.registration-card {
+    background: white;
+    width: 100%;
+    max-width: 900px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.6s ease-out;
+    position: relative;
+    max-height: calc(100vh - 120px);
+}
+
+.card-header {
+    background-color: var(--primary-red);
+    padding: 15px;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.card-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1));
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.card-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+form {
+    padding: 20px 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 25px;
+    overflow-y: auto;
+}
+
+
+form::-webkit-scrollbar {
+    width: 6px;
+}
+
+form::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+form::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+form::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-red);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.required {
+    color: var(--primary-red);
+    margin-left: 4px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid #e1e1e1;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #fafafa;
+    box-sizing: border-box;
+    color: #000;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-red);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+}
+
+input[readOnly] {
+    background-color: #f0f0f0;
+    color: #666;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+.buttons {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.save-btn {
+    background-color: var(--primary-red);
+    color: white;
+    border: none;
+    padding: 10px 35px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+}
+
+.save-btn:hover {
+    background-color: #a00000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+}
+
+.next-btn {
+    background-color: transparent;
+    color: var(--primary-red);
+    border: 2px solid var(--primary-red);
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.next-btn:hover {
+    background-color: var(--primary-red);
+    color: white;
+}
+
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #4caf50;
+    color: white;
+    font-weight: 600;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: slideInRight 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .registration-header {
+        padding: 15px 20px;
+    }
+
+    .logo-text,
+    .header-title {
+        display: none;
+    }
+
+    .registration-card {
+        max-height: calc(100vh - 80px);
+    }
+
+    form {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 12px;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+
+    .buttons {
+        grid-column: span 1;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .save-btn,
+    .next-btn {
+        width: 100%;
+    }
+}

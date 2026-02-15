@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model enquiry_registration {
+  id         Int     @id @default(autoincrement())
+  Name       String?
+  Phone      String?
+  Aadhar     String?
+  Address    String?
+  BloodGroup String?
+  Email      String?
+  created_at String?
+}
+
+model login {
+  id       Int     @id @default(autoincrement())
+  username String? @unique(map: "sqlite_autoindex_login_1")
+  password String?
+}
+
+model old_data {
+  ID          Int     @id @default(autoincrement())
+  Name        String?
+  Phone       String?
+  Gender     String?
+  BloodGroup String?
+  Year       String?
+  Address    String?
+  Sevakendra String?
+}
+
+model registration {
+  Id          Int     @id @default(autoincrement())
+  Name        String?
+  PhoneNumber String?
+  AdharNumber String?
+  Address     String?
+  Bloodgroup  String?
+  Sevakendra  String?
+  DateofBirth String?
+  Email       String?
+  created_at  String?
+}
