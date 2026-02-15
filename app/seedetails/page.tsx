@@ -22,23 +22,26 @@ export default function SeeDetailsPage() {
   const [donors, setDonors] = useState<Donor[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [years, setYears] = useState<string[]>([]);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+  const [availableDates, setAvailableDates] = useState<string[]>([]);
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
   const itemsPerPage = 10;
+
 
   useEffect(() => {
     fetch("/api/donors/years")
       .then(res => res.json())
-      .then(data => setYears(data))
+      .then(data => {
+        setAvailableDates(data);
+      })
       .catch(console.error);
   }, []);
 
   useEffect(() => {
     loadData();
-  }, [selectedYear]);
+  }, [selectedDate]);
 
   async function loadData() {
-    const url = selectedYear ? `/api/donors?year=${selectedYear}` : "/api/donors";
+    const url = selectedDate ? `/api/donors?year=${selectedDate}` : "/api/donors";
     const res = await fetch(url);
     const data = await res.json();
     setDonors(data);
@@ -180,9 +183,9 @@ export default function SeeDetailsPage() {
               </div>
 
               <select
-                className="year-select"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
+                className="date-select"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
                 style={{
                   padding: '8px 12px',
                   borderRadius: '30px',
@@ -195,8 +198,17 @@ export default function SeeDetailsPage() {
                   backgroundColor: 'white'
                 }}
               >
-                <option value="">All Years</option>
-                {years.map(y => <option key={y} value={y}>{y}</option>)}
+                {!availableDates.includes(new Date().toISOString().split("T")[0]) && (
+                  <option value={new Date().toISOString().split("T")[0]}>
+                    {new Date().toISOString().split("T")[0]} (Today)
+                  </option>
+                )}
+                {availableDates.map(date => (
+                  <option key={date} value={date}>
+                    {date}
+                  </option>
+                ))}
+                <option value="">All Records</option>
               </select>
 
               <button className="btn print-btn" onClick={printPDF}>

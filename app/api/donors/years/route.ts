@@ -14,15 +14,15 @@ export async function GET() {
             },
         });
 
-        const years = Array.from(
+        const dates = Array.from(
             new Set(
                 donors
-                    .map((d) => d.created_at?.split("-")[0])
-                    .filter((y): y is string => !!y && y.length === 4)
+                    .map((d) => d.created_at?.split("T")[0])
+                    .filter((date): date is string => !!date && /^\d{4}-\d{2}-\d{2}$/.test(date))
             )
         ).sort((a, b) => b.localeCompare(a));
 
-        return NextResponse.json(years);
+        return NextResponse.json(dates);
     } catch (error: any) {
         console.error("Error fetching registration years:", error);
         return NextResponse.json({ error: error.message }, { status: 500 });
