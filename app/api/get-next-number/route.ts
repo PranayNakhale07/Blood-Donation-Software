@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 export async function POST() {
-  const currentYear = new Date().getFullYear().toString();
+  const today = new Date().toISOString().split("T")[0];
 
   const result = await (db.registration as any).aggregate({
     where: {
       created_at: {
-        startsWith: currentYear,
+        startsWith: today,
       },
     },
     _max: {
