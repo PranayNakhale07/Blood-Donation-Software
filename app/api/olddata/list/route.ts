@@ -6,22 +6,29 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const year = searchParams.get("year");
 
-    let query = `
-      SELECT ID as Id, Name, Phone as PhoneNumber, BloodGroup as Bloodgroup, Year
-      FROM old_data
-    `;
-    const params = [];
+    const rows = await db.old_data.findMany({
+      where: year ? { Year: year } : {},
+      orderBy: {
+        ID: "desc",
+      },
+      select: {
+        ID: true,
+        Name: true,
+        Phone: true,
+        BloodGroup: true,
+        Year: true,
+      },
+    });
 
-    if (year) {
-      query += ` WHERE Year = ?`;
-      params.push(year);
-    }
+    const mappedRows = rows.map((row) => ({
+      Id: row.ID,
+      Name: row.Name,
+      PhoneNumber: row.Phone,
+      Bloodgroup: row.BloodGroup,
+      Year: row.Year,
+    }));
 
-    query += ` ORDER BY ID DESC`;
-
-    const rows = db.prepare(query).all(...params);
-
-    return NextResponse.json(rows);
+    return NextResponse.json(mappedRows);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

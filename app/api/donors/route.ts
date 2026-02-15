@@ -1,21 +1,20 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-export async function GET() {
-  const rows = db.prepare(`
-    SELECT
-      Id,
-      Name,
-      PhoneNumber,
-      AdharNumber,
-      Address,
-      Bloodgroup,
-      Sevakendra,
-      DateofBirth,
-      Email
-    FROM registration
-    ORDER BY Id DESC
-  `).all();
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const year = searchParams.get("year");
+
+  const rows = await db.registration.findMany({
+    where: year ? {
+      created_at: {
+        startsWith: year,
+      },
+    } : {},
+    orderBy: {
+      created_at: "desc",
+    },
+  });
 
   return NextResponse.json(rows);
 }
@@ -24,31 +23,21 @@ export async function PUT(req: Request) {
   try {
     const d = await req.json();
 
-    const info = db.prepare(`
-      UPDATE registration
-      SET
-        Name = ?,
-        PhoneNumber = ?,
-        AdharNumber = ?,
-        Address = ?,
-        Bloodgroup = ?,
-        Sevakendra = ?,
-        DateofBirth = ?,
-        Email = ?
-      WHERE Id = ?
-    `).run(
-      d.Name,
-      d.PhoneNumber,
-      d.AdharNumber,
-      d.Address,
-      d.Bloodgroup,
-      d.Sevakendra,
-      d.DateofBirth,
-      d.Email,
-      d.Id
-    );
+    const updated = await (db.registration as any).update({
+      where: { id: d.id },
+      data: {
+        Name: d.Name,
+        PhoneNumber: d.PhoneNumber,
+        AdharNumber: d.AdharNumber,
+        Address: d.Address,
+        Bloodgroup: d.Bloodgroup,
+        Sevakendra: d.Sevakendra,
+        DateofBirth: d.DateofBirth,
+        Email: d.Email,
+      },
+    });
 
-    if (info.changes === 0) {
+    if (!updated) {
       return NextResponse.json({ error: "Donor not found" }, { status: 404 });
     }
 

@@ -4,20 +4,18 @@ import { db } from "@/lib/db";
 export async function POST(req: Request) {
   const body = await req.json();
 
-  db.prepare(`
-    INSERT INTO old_data
-    (ID, Name, Phone, Gender, BloodGroup, Year, Address, Sevakendra)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(
-    body.id,
-    body.name,
-    body.phone,
-    body.gender,
-    body.bloodgroup,
-    body.year || null,
-    body.address || null,
-    body.sevakendra || null
-  );
+  await db.old_data.create({
+    data: {
+      ID: body.id,
+      Name: body.name,
+      Phone: body.phone,
+      Gender: body.gender,
+      BloodGroup: body.bloodgroup,
+      Year: body.year || null,
+      Address: body.address || null,
+      Sevakendra: body.sevakendra || null,
+    },
+  });
 
   return NextResponse.json({ success: true });
 }

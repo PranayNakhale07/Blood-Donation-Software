@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import "./seedetails.css";
 
 type Donor = {
+  id: string;
   Id: number;
   Name: string;
   PhoneNumber: string;
@@ -21,10 +22,24 @@ export default function SeeDetailsPage() {
   const [donors, setDonors] = useState<Donor[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [years, setYears] = useState<string[]>([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
   const itemsPerPage = 10;
 
+  useEffect(() => {
+    fetch("/api/donors/years")
+      .then(res => res.json())
+      .then(data => setYears(data))
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [selectedYear]);
+
   async function loadData() {
-    const res = await fetch("/api/donors");
+    const url = selectedYear ? `/api/donors?year=${selectedYear}` : "/api/donors";
+    const res = await fetch(url);
     const data = await res.json();
     setDonors(data);
     setCurrentPage(1);
@@ -163,13 +178,27 @@ export default function SeeDetailsPage() {
                   </button>
                 )}
               </div>
-              <button className="btn view-btn" onClick={loadData}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-                View Records
-              </button>
+
+              <select
+                className="year-select"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: '30px',
+                  border: '1px solid #e0e0e0',
+                  outline: 'none',
+                  marginRight: '10px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  color: '#444',
+                  backgroundColor: 'white'
+                }}
+              >
+                <option value="">All Years</option>
+                {years.map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+
               <button className="btn print-btn" onClick={printPDF}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>

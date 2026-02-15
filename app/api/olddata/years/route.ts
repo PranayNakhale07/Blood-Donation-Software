@@ -3,14 +3,20 @@ import { db } from "@/lib/db";
 
 export async function GET() {
     try {
-        const rows = db.prepare(`
-      SELECT DISTINCT Year
-      FROM old_data
-      WHERE Year IS NOT NULL
-      ORDER BY Year DESC
-    `).all() as { Year: string }[];
+        const rows = await db.old_data.findMany({
+            where: {
+                Year: { not: null },
+            },
+            distinct: ["Year"],
+            select: {
+                Year: true,
+            },
+            orderBy: {
+                Year: "desc",
+            },
+        });
 
-        return NextResponse.json(rows.map(r => r.Year));
+        return NextResponse.json(rows.map((r) => r.Year));
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

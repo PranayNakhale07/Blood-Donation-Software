@@ -3,29 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
-model enquiry_registration {
-  id         Int     @id @default(autoincrement())
-  Name       String?
-  Phone      String?
-  Aadhar     String?
-  Address    String?
-  BloodGroup String?
-  Email      String?
-  created_at String?
-}
 
-model login {
-  id       Int     @id @default(autoincrement())
-  username String? @unique(map: "sqlite_autoindex_login_1")
-  password String?
-}
 
 model old_data {
-  ID          Int     @id @default(autoincrement())
+  ID          Int     @id @default(sequence())
   Name        String?
   Phone       String?
   Gender     String?
@@ -36,7 +21,8 @@ model old_data {
 }
 
 model registration {
-  Id          Int     @id @default(autoincrement())
+  id          String  @id @default(uuid())
+  Id          Int
   Name        String?
   PhoneNumber String?
   AdharNumber String?

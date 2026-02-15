@@ -11,21 +11,20 @@ export async function POST(req: Request) {
   try {
     const d = await req.json();
 
-    db.prepare(`
-      INSERT INTO registration
-      (Name, PhoneNumber, AdharNumber, Address, Bloodgroup, Sevakendra, DateofBirth, Email, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      d.Name,
-      d.PhoneNumber,
-      d.AdharNumber,
-      d.Address,
-      d.Bloodgroup,
-      d.Sevakendra,
-      d.DateofBirth,
-      d.Email,
-      new Date().toISOString()
-    );
+    await (db.registration as any).create({
+      data: {
+        Id: d.ID || d.Id,
+        Name: d.Name,
+        PhoneNumber: d.PhoneNumber,
+        AdharNumber: d.AdharNumber,
+        Address: d.Address,
+        Bloodgroup: d.Bloodgroup,
+        Sevakendra: d.Sevakendra,
+        DateofBirth: d.DateofBirth,
+        Email: d.Email,
+        created_at: new Date().toISOString(),
+      },
+    });
 
 
     return NextResponse.json({ message: "Data saved successfully!" });

@@ -7,6 +7,7 @@ import autoTable from "jspdf-autotable";
 import "./update-info.css";
 
 type Donor = {
+    id: string;
     Id: number;
     Name: string;
     PhoneNumber: string;
@@ -17,11 +18,22 @@ type Donor = {
     DateofBirth: string;
     Email?: string;
 };
+
+type Toast = {
+    message: string;
+    type: "success" | "error";
+};
 export default function UpdateInfoPage() {
     const [donors, setDonors] = useState<Donor[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [toast, setToast] = useState<Toast | null>(null);
     const itemsPerPage = 10;
+
+    function showToast(message: string, type: "success" | "error") {
+        setToast({ message, type });
+        setTimeout(() => setToast(null), 5000);
+    }
 
     async function loadData() {
         const res = await fetch("/api/donors");
@@ -127,15 +139,15 @@ export default function UpdateInfoPage() {
             });
 
             if (res.ok) {
-                alert("Donor updated successfully");
+                showToast("Donor updated successfully!", "success");
                 handleCloseModal();
                 loadData();
             } else {
                 const data = await res.json();
-                alert("Failed to update: " + data.error);
+                showToast("Failed to update: " + data.error, "error");
             }
         } catch (err: any) {
-            alert("Error updating donor: " + err.message);
+            showToast("Error updating donor: " + err.message, "error");
         }
     }
 
@@ -385,6 +397,25 @@ export default function UpdateInfoPage() {
                             <button className="btn-primary" onClick={handleSave}>Save Changes</button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {toast && (
+                <div className={`toast-notification ${toast.type}`}>
+                    <div className="toast-icon">
+                        {toast.type === "success" ? (
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        ) : (
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                            </svg>
+                        )}
+                    </div>
+                    <div className="toast-message">{toast.message}</div>
                 </div>
             )}
         </div>
