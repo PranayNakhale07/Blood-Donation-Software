@@ -10,9 +10,10 @@ datasource db {
 
 
 model old_data {
-  ID          Int     @id @default(sequence())
-  Name        String?
-  Phone       String?
+  id         String  @id @default(uuid())
+  ID         Int
+  Name       String?
+  Phone      String?
   Gender     String?
   BloodGroup String?
   Year       String?

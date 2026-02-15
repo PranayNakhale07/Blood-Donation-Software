@@ -17,12 +17,18 @@ export default function SaveOldDataPage() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetchNextId();
-    }, []);
+        if (form.Year && form.Year.length === 4) {
+            fetchNextId(form.Year);
+        }
+    }, [form.Year]);
 
-    async function fetchNextId() {
+    async function fetchNextId(year: string) {
         try {
-            const res = await fetch("/api/olddata/next-id");
+            const res = await fetch("/api/olddata/next-id", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ year })
+            });
             const data = await res.json();
             setId(data.next_id);
         } catch (error) {
@@ -61,7 +67,7 @@ export default function SaveOldDataPage() {
                     Bloodgroup: "",
                     Year: ""
                 });
-                fetchNextId();
+                fetchNextId(form.Year);
                 setTimeout(() => setSuccess(false), 3000);
             } else {
                 alert("Failed to save data");
